@@ -1,10 +1,16 @@
 package estudos.maya.literalura.main;
 
+import estudos.maya.literalura.model.DadosLivro;
+import estudos.maya.literalura.service.ConsumoApi;
+import estudos.maya.literalura.service.ConverteDados;
+
 import java.util.Scanner;
 
 public class Main {
 
     Scanner sc = new Scanner(System.in);
+    ConsumoApi consumo = new ConsumoApi();
+    ConverteDados conversor = new ConverteDados();
 
     public void exibeMenu(){
 
@@ -30,6 +36,7 @@ public class Main {
 
             switch(opcao){
                 case 1:
+                    buscarLivroWeb();
                     break;
                 case 2:
                     break;
@@ -47,5 +54,12 @@ public class Main {
             }
         }
 
+    }
+
+    private void buscarLivroWeb() {
+        var endereco = "https://gutendex.com/books?search=dom%20casmurro";
+        var json = consumo.obterDados(endereco);
+        DadosLivro livro = conversor.obterDados(json, DadosLivro.class);
+        System.out.println(livro);
     }
 }
